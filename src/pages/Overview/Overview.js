@@ -17,11 +17,13 @@ const Overview = (props) => {
     }, [tours.length, fetchTours]);
 
     return (
-        <section className="card-container">
-            {tours.map((tour) => (
-                <TourCard tour={tour} key={tour.id} />
-            ))}
-        </section>
+        <main className="main">
+            <section className="card-container">
+                {tours.map((tour) => (
+                    <TourCard tour={tour} key={tour.id} />
+                ))}
+            </section>
+        </main>
     );
 };
 export default Overview;
