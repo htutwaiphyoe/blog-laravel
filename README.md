@@ -3,3 +3,7 @@
 ## Technologies
 
 -   React
+-   Redux
+-   Redux Thunk
+-   Axios
+-   React Router
