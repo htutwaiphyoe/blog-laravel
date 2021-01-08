@@ -14,7 +14,10 @@ const Detail = (props) => {
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
-    }, []);
+        return () => {
+            dispatch(actionCreators.clearTour());
+        };
+    }, [dispatch]);
 
     useEffect(() => {
         if (tours.length === 0) {

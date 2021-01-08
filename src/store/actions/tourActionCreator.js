@@ -32,3 +32,9 @@ export const getTour = (slug) => async (dispatch) => {
         console.log(e.response);
     }
 };
+
+export const clearTour = () => {
+    return {
+        type: actionTypes.CLEAR_TOUR,
+    };
+};

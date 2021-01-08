@@ -1,1 +1,1 @@
-export { getTours, getTour, getTourSync } from "./tourActionCreator";
+export { getTours, getTour, getTourSync, clearTour } from "./tourActionCreator";

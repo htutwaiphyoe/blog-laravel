@@ -8,7 +8,7 @@ const Overview = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });
+        document.title = "Natours | Exciting tours for adventurous people";
     }, []);
 
     useEffect(() => {
