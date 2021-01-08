@@ -12,11 +12,17 @@ const Detail = (props) => {
         const response = await natours.get(`/api/v1/tours/${slug}`);
         setTour(response.data.data.data);
     }, [slug]);
+
     useEffect(() => {
         if (!tour) {
             fetchTour();
         }
     }, [tour, fetchTour]);
+    useEffect(() => {
+        if (tour) {
+            document.title = `${tour.name} | Natours`;
+        }
+    }, [tour]);
     if (tour) {
         return (
             <div>

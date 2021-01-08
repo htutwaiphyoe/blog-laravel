@@ -1,0 +1,1 @@
+export { getTours } from "./tourActionCreator";

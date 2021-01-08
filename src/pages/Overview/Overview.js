@@ -1,20 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import natours from "../../api/natours";
 import TourCard from "../../components/TourCard/TourCard";
+import * as actionCreators from "../../store/actions";
 const Overview = (props) => {
-    const [tours, setTours] = useState([]);
-
-    const fetchTours = useCallback(async () => {
-        const response = await natours.get("/api/v1/tours");
-        setTours(response.data.data.data);
-    }, []);
+    const tours = useSelector((state) => state.tourState.tours);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (tours.length === 0) {
-            fetchTours();
+            dispatch(actionCreators.getTours());
         }
-    }, [tours.length, fetchTours]);
+    }, [tours.length, dispatch]);
 
     return (
         <main className="main">
