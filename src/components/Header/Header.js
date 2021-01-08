@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import headerLogo from "../../assets/img/logo-white.png";
 import searchIcon from "../../assets/img/icons.svg";
 
@@ -6,7 +8,9 @@ const Header = (props) => {
         <header className="header">
             <nav className="nav nav--tours">
                 <div className="header__logo">
-                    <img src={headerLogo} alt="Natours logo" />
+                    <Link to="/">
+                        <img src={headerLogo} alt="Natours logo" />
+                    </Link>
                 </div>
             </nav>
             <form className="nav__search">

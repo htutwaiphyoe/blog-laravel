@@ -16,3 +16,19 @@ export const getTours = () => async (dispatch) => {
         console.log(e.response);
     }
 };
+
+export const getTourSync = (payload) => {
+    return {
+        type: actionTypes.GET_TOUR,
+        payload,
+    };
+};
+
+export const getTour = (slug) => async (dispatch) => {
+    try {
+        const response = await natours.get(`/api/v1/tours/${slug}`);
+        dispatch(getTourSync(response.data.data.data));
+    } catch (e) {
+        console.log(e.response);
+    }
+};

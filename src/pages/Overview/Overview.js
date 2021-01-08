@@ -8,6 +8,10 @@ const Overview = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        window.scrollTo({ top: 0 });
+    }, []);
+
+    useEffect(() => {
         if (tours.length === 0) {
             dispatch(actionCreators.getTours());
         }

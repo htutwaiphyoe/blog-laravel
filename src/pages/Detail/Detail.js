@@ -1,36 +1,44 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import natours from "../../api/natours";
 import { formatDate } from "../../utils/utils";
 import icons from "../../assets/img/icons.svg";
+import * as actionCreators from "../../store/actions";
 
 const Detail = (props) => {
-    const [tour, setTour] = useState(null);
     const { slug } = useParams();
-    const fetchTour = useCallback(async () => {
-        const response = await natours.get(`/api/v1/tours/${slug}`);
-        setTour(response.data.data.data);
-    }, [slug]);
+    const tour = useSelector((state) => state.tourState.selectedTour);
+    const tours = useSelector((state) => state.tourState.tours);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!tour) {
-            fetchTour();
+        window.scrollTo({ top: 0 });
+    }, []);
+
+    useEffect(() => {
+        if (tours.length === 0) {
+            dispatch(actionCreators.getTour(slug));
+        } else {
+            const tour = tours.find((tour) => tour.slug === slug);
+            if (tour) dispatch(actionCreators.getTourSync(tour));
         }
-    }, [tour, fetchTour]);
+    }, [tours, dispatch, slug]);
+
     useEffect(() => {
         if (tour) {
             document.title = `${tour.name} | Natours`;
         }
     }, [tour]);
+
     if (tour) {
         return (
             <div>
                 <section className="section-header">
-                    <div class="header__hero">
-                        <div class="header__hero-overlay">&nbsp;</div>
+                    <div className="header__hero">
+                        <div className="header__hero-overlay">&nbsp;</div>
                         <img
-                            class="header__hero-img"
+                            className="header__hero-img"
                             src={require(`./../../assets/img/tours/${tour.imageCover}`).default}
                             alt={tour.name}
                         />
@@ -101,8 +109,8 @@ const Detail = (props) => {
 
                             <div className="overview-box__group">
                                 <h2 className="heading-secondary ma-bt-lg">Your tour guides</h2>
-                                {tour.guides.map((guide) => (
-                                    <div className="overview-box__detail">
+                                {tour.guides.map((guide, i) => (
+                                    <div className="overview-box__detail" key={i}>
                                         <img
                                             src={
                                                 require(`./../../assets/img/users/${guide.photo}`)
@@ -125,15 +133,17 @@ const Detail = (props) => {
 
                     <div className="description-box">
                         <h2 className="heading-secondary ma-bt-lg">About {tour.name} tour</h2>
-                        {tour.description.split("\n").map((p) => (
-                            <p className="description__text">{p}</p>
+                        {tour.description.split("\n").map((p, i) => (
+                            <p className="description__text" key={i}>
+                                {p}
+                            </p>
                         ))}
                     </div>
                 </section>
 
                 <section className="section-pictures">
                     {tour.images.map((image, i) => (
-                        <div className="picture-box">
+                        <div className="picture-box" key={i}>
                             <img
                                 className={`picture-box__img picture-box__img--${i + 1}`}
                                 src={require(`./../../assets/img/tours/${image}`).default}
@@ -149,8 +159,8 @@ const Detail = (props) => {
 
                 <section className="section-reviews">
                     <div className="reviews">
-                        {tour.reviews.map((review) => (
-                            <div className="reviews__card">
+                        {tour.reviews.map((review, i) => (
+                            <div className="reviews__card" key={i}>
                                 <div className="reviews__avatar">
                                     <img
                                         src={
@@ -164,11 +174,12 @@ const Detail = (props) => {
                                 </div>
                                 <p className="reviews__text">{review.review}</p>
                                 <div className="reviews__rating">
-                                    {[1, 2, 3, 4, 5].map((start) => (
+                                    {[1, 2, 3, 4, 5].map((start, i) => (
                                         <svg
                                             className={`reviews__star reviews__star--${
                                                 review.rating >= start ? "active" : "inactive"
                                             }`}
+                                            key={i}
                                         >
                                             <use xlinkHref={`${icons}#icon-star`}></use>
                                         </svg>

@@ -10,10 +10,16 @@ const getTours = (state, action) => {
     return updateObject(state, { tours: action.payload });
 };
 
+const getTour = (state, action) => {
+    return updateObject(state, { selectedTour: action.payload });
+};
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.GET_TOURS:
             return getTours(state, action);
+        case actionTypes.GET_TOUR:
+            return getTour(state, action);
         default:
             return state;
     }
